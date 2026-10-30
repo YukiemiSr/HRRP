@@ -1,0 +1,68 @@
+{
+  "description": "Standalone original amplitude-only BUAA TCN random 8:2 baseline",
+  "date": "2026-10-31",
+  "upstream": {
+    "url": "https://github.com/locuslab/TCN",
+    "commit": "2f8c2b817050206397458dfd1f5a25ce8a32fe65",
+    "license": "licenses/TCN_LICENSE",
+    "source_file": "tcn.py",
+    "source_sha256": "f93c67de970f4c9e1a96a7d2bed1df89c521faf6ca94e36455267605b1ad585f"
+  },
+  "bundled_checkpoint": {
+    "path": "checkpoints/best.pt",
+    "sha256": "9116261d582e9f8ff5d5747cd8960623ac0ce4de3e6ae6fc7b3dbaa022a45bf3",
+    "source": "analysis-output/external-cil-gt1000-2026-10-19/assets/base_best.pt",
+    "epoch": 99,
+    "original_test_accuracy": 0.8582373996323885
+  },
+  "frozen_split": {
+    "file": "splits/split_indices.npz",
+    "sha256": "7fc8b92a7ada73ca4a409848291430b52fa6d4810e579f265f5be5ee62e0f157",
+    "indices_hash": "fdae7738f6c017802c85c341843eb34b3ef822d7109c76a1e94227455249e20c",
+    "sizes": {
+      "train": 186041,
+      "validation": 20677,
+      "test": 51685
+    }
+  },
+  "verification": {
+    "unit_integration_tests_passed": 4,
+    "portable_directory_train_val_test": "passed outside project with empty PYTHONPATH",
+    "original_checkpoint_sha256": "9116261d582e9f8ff5d5747cd8960623ac0ce4de3e6ae6fc7b3dbaa022a45bf3",
+    "original_split_file_sha256": "7fc8b92a7ada73ca4a409848291430b52fa6d4810e579f265f5be5ee62e0f157",
+    "original_source_copies": "tcn.py and dataset.py byte-identical",
+    "same_seed_initial_parameters_bitwise_equal": true,
+    "original_vs_packaged_logits_bitwise_equal": true,
+    "full_test_records": 51685,
+    "full_test_acc": 0.8582373996323885,
+    "all_test_indices_labels_predictions_match_original": true,
+    "full_test_metrics_and_confusion_matrix": "exact original match",
+    "lint": "ruff F checks passed",
+    "torch_version": "2.6.0"
+  },
+  "file_sha256": {
+    "README.md": "391eecf7b75ea3022c750a6399b3c37c934afcbfaa93d76036b3f0a2b4dc6023",
+    "__init__.py": "65a9a665685d35834d227956dbb331ac512370fa837f114b318baffa7ed73a2d",
+    "checkpoints/best.pt": "9116261d582e9f8ff5d5747cd8960623ac0ce4de3e6ae6fc7b3dbaa022a45bf3",
+    "checkpoints/original_result.json": "b5f496889122a67286a9e129aa10c828dbe82b874704d0db32a3d885ad539384",
+    "config.json": "d5202b9a53df9e24cf816c214142b5db3d9ed63d697fca62f8287dcb0bfb0cbf",
+    "data.py": "f046c6ab86df952af58810667e3247b86b26e05b2b96d52aeefa76693400dbcd",
+    "dataset.py": "818ff248a3a2fe12a2f5bda11f40e5d263003827efe7cf99be4ab98db7ba2f67",
+    "licenses/TCN_LICENSE": "7b9a89cb975f5891f02be043c0ca5c9b9d6c43ced216c2d508f0f7e4380a6cbd",
+    "model.py": "f4ebe3075ca9348d228dbb9bc9a8dc3bbb2ce445a26c4287a3031886ea6bc300",
+    "prepare_data.py": "512398aab512933c5f0c34476283c79eb35d63a7e691a230e4847b1d754e72c5",
+    "requirements.txt": "bac2db6dc553341c590ba23e3dc72f34305b4bc32c23de80adea231caa502b77",
+    "splits/split_indices.npz": "7fc8b92a7ada73ca4a409848291430b52fa6d4810e579f265f5be5ee62e0f157",
+    "tcn.py": "f93c67de970f4c9e1a96a7d2bed1df89c521faf6ca94e36455267605b1ad585f",
+    "test.py": "eac12c6374711f15773b9e81496de12a1fbc845724723470f4478ab776ff7951",
+    "tests/test_package.py": "108c4ec7058ae588b30f9c7579207a0f611a6a1a6ab7becc8812c9e0427f5f33",
+    "train.py": "778a515c0d044b6ddda46aeba4dd5a0dc7909139b8846daabc01154855d3af01",
+    "utils.py": "cd4dcc9ed75782fed741ff0dd5a3f777c275d2e14778430b8b88d75e6e742211",
+    "val.py": "537da576ae5bc64a0c29258fe6385a3806b98369b95e9545bb85b3714243e8ca"
+  },
+  "publication": {
+    "repository": "https://github.com/YukiemiSr/HRRP",
+    "change": "README examples made portable; model, train/val/test, weights and split unchanged",
+    "date": "2026-10-31"
+  }
+}

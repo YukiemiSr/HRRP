@@ -1,0 +1,34 @@
+{
+  "data": {
+    "cache_dir": "../dataset/BUAA/cache/internal_l2",
+    "expected_source_signature": "082f97282486f14f3157389c6822217bb241115b186f21632fefceeb70587726"
+  },
+  "split": {
+    "path": "splits/split_indices.npz",
+    "file_sha256": "7fc8b92a7ada73ca4a409848291430b52fa6d4810e579f265f5be5ee62e0f157",
+    "expected_hash": "fdae7738f6c017802c85c341843eb34b3ef822d7109c76a1e94227455249e20c",
+    "train_pool_ratio": 0.8,
+    "validation_fraction_of_train_pool": 0.1,
+    "seed": 56
+  },
+  "model": {
+    "name": "tcn",
+    "input_size": 800,
+    "num_classes": 10
+  },
+  "training": {
+    "seed": 56,
+    "epochs": 100,
+    "batch_size": 64,
+    "learning_rate": 0.0005,
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 5.0,
+    "checkpoint_selection": "minimum_validation_loss"
+  },
+  "runtime": {
+    "threads": 4,
+    "device": "auto",
+    "output_root": "runs"
+  },
+  "checkpoint": "checkpoints/best.pt"
+}

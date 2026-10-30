@@ -1,0 +1,13 @@
+# Python caches and environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.DS_Store
+
+# Local data and generated experiment outputs
+/dataset/
+/analysis-output/
+/TCN/runs/
+/TCN/evaluations/
+*.log
