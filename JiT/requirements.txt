@@ -1,0 +1,6 @@
+# Tested with Python 3.10 / PyTorch 2.6 / CUDA 12.4 / RTX 4090
+numpy>=1.24
+torch>=2.4
+PyYAML>=6.0
+matplotlib>=3.7
+tqdm>=4.60

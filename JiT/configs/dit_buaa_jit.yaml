@@ -1,0 +1,127 @@
+# V4: class-conditional HRRP DiT.  No source HRRP is injected; the condition
+# is the class label + target azimuth.  This is standard class-conditional DiT
+# (adaLN-Zero) applied to absolute HRRP diffusion.
+# Paths are relative to HRRP_DiT/ (the project root).
+seed: 42
+
+data:
+  root: ../BUAA                      # BUAA/ (contains internal_data/, total_label.json)
+  subdir: internal_data
+  processed_dir: data/buaa
+  length: 800
+  angle_field: yaw              # yaw == |azimuth - course|, the HRRP aspect angle
+  angle_max: 180.0
+  target_mode: absolute        # class mode has no source; diffuse x(a_t) directly
+  residual_scale: null         # unused in absolute mode
+  split_by: profiles            # file-level split, balanced by profile count
+  val_ratio: 0.1
+  test_ratio: 0.1
+  min_source_delta: 2.0         # source/target azimuth separation during training
+  max_source_delta: 20.0        # keep the source in the local view-synthesis window
+  p_same_file: 0.8              # prefer a source from the same recording
+  p_self: 0.1                   # fraction of exact self-reconstruction pairs
+  # Optional curriculum: hold p_self_initial for p_self_hold_steps, then
+  # anneal to p_self over p_self_anneal_steps.  Residual mode does not need it
+  # (self-reconstruction is r=0), so the schedule is disabled by default.
+  p_self_initial: 0.1
+  p_self_hold_steps: 0
+  p_self_anneal_steps: 0
+
+model:
+  variant: DiT-B                # DiT-S / DiT-B / DiT-L / DiT-XL (paper Table 1)
+  input_length: 800
+  patch_size: 8                 # 800 / 8 = 100 tokens
+  in_channels: 1                # noised absolute HRRP
+  cond_mode: class              # v4: class label + target azimuth -> adaLN c
+  cond_channels: 0
+  num_classes: 10
+  class_dropout_prob: 0.1       # CFG: 10% null class during training
+  mlp_ratio: 4.0
+  dropout: 0.0
+  angle_max: 180.0
+  angle_fourier_bands: [1, 2, 4, 8]
+  angle_hidden: 256
+  out_channels: 1
+
+diffusion:
+  # JiT (arXiv:2511.13720): z_t = t*x + (1-t)*eps, the network predicts x,
+  # and the loss is the v-loss ||x_pred - x||^2 / (1-t)^2.
+  formulation: jit
+  prediction: x
+  timesteps: 1000              # unused by the flow sampler (kept for checkpoints)
+  noise_scale: 1.0
+  t_dist: logit_normal
+  t_mu: -0.8
+  t_sigma: 0.8
+  denom_clip: 0.05            # clip 1/(1-t), as in the paper
+  time_scale: 1000.0          # continuous t in [0,1] -> [0,1000] for the embedder
+  clip_denoised: null         # JiT does not clip x_pred
+  min_snr_gamma: 0.0
+
+train:
+  out_dir: runs/dit_b_class_jit
+  device: cuda:0
+  batch_size: 128
+  max_steps: 40000
+  lr: 0.0001
+  betas: [0.9, 0.999]
+  weight_decay: 0.0
+  warmup_steps: 1000
+  grad_clip: 1.0
+  ema_decay: 0.9995
+  amp: bf16
+  cond_drop_prob: 0.1
+  identity_loss_weight: 0.0     # optional classifier identity loss (see identity.py)
+  identity_t_max: 400
+  log_every: 50
+  val_every: 2000
+  val_batches: 4
+  val_pairs: 1024
+  save_every: 5000
+
+eval:
+  out_dir: runs/dit_b_class_jit/evaluation
+  split: test
+  use_ema: false               # raw final weights were better on distribution metrics
+  source_angles: [62.5, 75.0, 87.5]
+  source_width: 2.5
+  target_angles: [66.5, 69.0, 71.0, 79.0, 81.0, 84.0]
+  target_width: 2.0
+  eval_max_source_delta: 20.0
+  require_same_file: false      # true = source and reference from the same recording
+  n_per_angle: 200
+  n_real: 300
+  batch_size: 128
+  steps: 50
+  sampler: euler
+  cfg_scale: 1.0
+  residual_shrink: 1.0         # <1 keeps the output closer to the source (identity vs angle trade-off)
+  self_recon_n: 100
+  sweep_class: A321
+  sweep_source_angle: 75.0
+  sweep_source_width: 2.5
+  sweep_angles: [30, 40, 50, 60, 65, 70, 75, 80, 85, 90, 100, 110, 120, 135, 150]
+  sweep_sources: 8
+  max_metrics_samples: 256
+  viz_classes: [A321, A319, BY737]
+  seed: 0
+
+classifier:
+  checkpoint: checkpoints/classifier_buaa_full.pt
+  out_dir: runs/classifier_buaa_full
+  device: cuda:0
+  num_classes: 10
+  channels: [64, 128, 256, 512, 512]
+  blocks: [2, 2, 3, 3, 3]
+  hidden: 256
+  dropout: 0.3
+  epochs: 30
+  batch_size: 256
+  lr: 0.0002
+  weight_decay: 0.0001
+  max_per_class: 0                # 0 = use every training profile
+  shift: 3
+  noise_std: 0.005
+  scale_jitter: 0.05
+  amp: bf16
+  seed: 42
