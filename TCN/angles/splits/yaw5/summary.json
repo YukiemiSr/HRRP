@@ -1,0 +1,167 @@
+{
+  "protocol": "alternating_yaw_bins_1to1_v1",
+  "source_signature": "082f97282486f14f3157389c6822217bb241115b186f21632fefceeb70587726",
+  "bin_width_degrees": 5,
+  "split_hash": "d900517406de7d354c67fa1766973b8a5c4ca974fb06b404ff4fb96618d9403c",
+  "split_sizes": {
+    "train": 115533,
+    "validation": 12842,
+    "test": 130028
+  },
+  "train_pool_intervals": [
+    [
+      0,
+      5
+    ],
+    [
+      10,
+      15
+    ],
+    [
+      20,
+      25
+    ],
+    [
+      30,
+      35
+    ],
+    [
+      40,
+      45
+    ],
+    [
+      50,
+      55
+    ],
+    [
+      60,
+      65
+    ],
+    [
+      70,
+      75
+    ],
+    [
+      80,
+      85
+    ],
+    [
+      90,
+      95
+    ],
+    [
+      100,
+      105
+    ],
+    [
+      110,
+      115
+    ],
+    [
+      120,
+      125
+    ],
+    [
+      130,
+      135
+    ],
+    [
+      140,
+      145
+    ],
+    [
+      150,
+      155
+    ],
+    [
+      160,
+      165
+    ],
+    [
+      170,
+      175
+    ]
+  ],
+  "test_intervals": [
+    [
+      5,
+      10
+    ],
+    [
+      15,
+      20
+    ],
+    [
+      25,
+      30
+    ],
+    [
+      35,
+      40
+    ],
+    [
+      45,
+      50
+    ],
+    [
+      55,
+      60
+    ],
+    [
+      65,
+      70
+    ],
+    [
+      75,
+      80
+    ],
+    [
+      85,
+      90
+    ],
+    [
+      95,
+      100
+    ],
+    [
+      105,
+      110
+    ],
+    [
+      115,
+      120
+    ],
+    [
+      125,
+      130
+    ],
+    [
+      135,
+      140
+    ],
+    [
+      145,
+      150
+    ],
+    [
+      155,
+      160
+    ],
+    [
+      165,
+      170
+    ],
+    [
+      175,
+      180
+    ]
+  ],
+  "interval_convention": "[left,right); final interval includes 180",
+  "validation": "class-stratified 10% of even-bin pool, seed1056",
+  "bin_count_ratio": "1:1; sample counts are not forced equal",
+  "angle_buffer_degrees": 0,
+  "file_disjoint": false,
+  "shared_train_test_files": 652,
+  "pitch_held_out": false,
+  "conditioning_independent_split": true
+}

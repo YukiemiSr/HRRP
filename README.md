@@ -1,6 +1,6 @@
 # HRRP
 
-HRRP（高分辨距离像）识别实验代码。目前包含独立的BUAA纯幅度TCN基线。
+HRRP（高分辨距离像）识别实验代码。包含BUAA纯幅度TCN基线和基于yaw/pitch条件的TCN＋FiLM角度泛化实验。
 
 ## TCN
 
@@ -19,6 +19,19 @@ python test.py --data-dir /path/to/BUAA/cache/internal_l2 --device cpu
 ```
 
 完整训练、验证、测试和数据格式见[TCN运行说明](TCN/README.md)。原始BUAA数据不随仓库分发，需要自行提供缓存或原始数据。
+
+## TCN＋FiLM角度泛化
+
+代码、5°/10°/15°固定yaw划分、配置和测试位于[`TCN/angles/`](TCN/angles/README.md)。每个箱宽比较普通TCN、yaw FiLM和yaw/pitch FiLM，三个条件共用同一划分；模型均从头训练。FiLM在每个TCN块后使用真实角度调制特征，训练和推理均需逐条角度元数据。
+
+```bash
+# 在仓库根目录执行；指定本机BUAA缓存
+python -m TCN.angles.train --config TCN/angles/configs/yaw5.json \
+  --conditioning yaw_pitch --data-dir /path/to/BUAA/cache/internal_l2 \
+  --smoke --device cpu --output TCN/angles/runs/smoke_yaw5
+```
+
+完整实验矩阵、正式训练、独立评估及划分核验见[角度泛化说明](TCN/angles/README.md)。`--smoke`只检查流程，不代表正式成绩。角度实验的运行输出、数据缓存和训练checkpoint不随本仓库发布。
 
 ## 原基线
 

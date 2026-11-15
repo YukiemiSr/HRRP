@@ -2,6 +2,8 @@
 
 模型、数据读取、训练、验证、测试都在本目录，运行不依赖父项目的`open_baselines`或其他Python模块。默认使用父目录已有BUAA缓存，不重复复制约0.83GB信号数据。目录可以单独复制到服务器，使用`--data-dir`指定缓存。
 
+基于同一TCN骨干的yaw及yaw/pitch FiLM角度泛化实现见[angles/README.md](angles/README.md)；其固定划分与下述原随机8:2基线不同。
+
 ```text
 TCN/
 ├── model.py                 # TCNClassifier，骨干＋保留距离位置的分类头

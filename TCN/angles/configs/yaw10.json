@@ -1,0 +1,36 @@
+{
+  "protocol": "alternating_yaw_bins_1to1_v1",
+  "data": {
+    "cache_dir": "../../../dataset/BUAA/cache/internal_l2",
+    "expected_source_signature": "082f97282486f14f3157389c6822217bb241115b186f21632fefceeb70587726"
+  },
+  "split": {
+    "directory": "../splits/yaw10",
+    "bin_width_degrees": 10,
+    "origin_degrees": 0,
+    "period_bins": 2,
+    "test_bin_offset": 1,
+    "validation_fraction_of_train_pool": 0.1,
+    "seed": 56,
+    "expected_hash": "5b2cf93d945c2a93c2dc45778caac3ddfa2e6b22a0f6c8a1545e3534d199cc94",
+    "file_sha256": "9cc709f95ea883df93d7b7d65ddd29002c8d48181e7b60c33ff2cbb5a3249d99"
+  },
+  "model": {
+    "input_size": 800,
+    "num_classes": 10
+  },
+  "training": {
+    "seed": 56,
+    "epochs": 100,
+    "batch_size": 64,
+    "learning_rate": 0.0005,
+    "weight_decay": 0.0001,
+    "gradient_clip_norm": 5.0,
+    "checkpoint_selection": "minimum_validation_loss"
+  },
+  "runtime": {
+    "threads": 2,
+    "device": "auto",
+    "output_root": "../runs"
+  }
+}
